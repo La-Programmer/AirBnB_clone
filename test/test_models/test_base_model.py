@@ -46,3 +46,4 @@ class TestBaseModel(unittest.TestCase):
 		dictionary.update({'__class__': "BaseModel"})
 		dictionary1.update({'created_at': created_at.strftime("%Y-%m-%dT%H:%M:%S.%f"), 'updated-at': updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f")})
 		self.assertEqual(dictionary, dictionary1)
+		

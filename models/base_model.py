@@ -6,7 +6,8 @@ from datetime import datetime
 
 class BaseModel:
     """python3 -c 'print(__import__("base_model.py").base_model__doc__)'
-	"""
+        """
+
     def __init__(self):
         """Method to initialize the class attributes"""
         self.id = str(uuid4())
@@ -21,7 +22,8 @@ class BaseModel:
         """Method for serialization"""
         serialized = dict(self.__dict__)
         serialized['__class__'] = self.__class__.__name__
-        serialized.update({"created_at": self.created_at.isoformat(), "updated_at": self.updated_at.isoformat()})
+        serialized.update({"created_at": self.created_at.isoformat(
+        ), "updated_at": self.updated_at.isoformat()})
         return serialized
 
     def __str__(self):

@@ -24,20 +24,20 @@ class TestBaseModel(unittest.TestCase):
 		"""
 		del self.firstbase, self.secondbase, self.thirdbase
 	
-	def testPrint(self):
+	def test_print(self):
 		"""python3 -c 'print(__import__("test_base_model.py").print__doc__)'
 		"""
 		self.firstbase.name = "My first instance"
 		self.firstbase.number = 98
 		self.assertEqual("[BaseModel] ({}) {}".format(self.firstbase.id, self.firstbase.__dict__), str(self.firstbase))
 
-	def testSave(self):
+	def test_save(self):
 		"""python3 -c 'print(__import__("test_base_model.py").save__doc__)'
 		"""
 		self.secondbase.save()
 		self.assertNotEqual(self.secondbase.created_at, self.secondbase.updated_at)
 
-	def testToDict(self):
+	def test_to_dict(self):
 		"""python3 -c 'print(__import__("test_base_model.py").to_dict__doc__)'
 		"""
 		dictionary = self.thirdbase.to_dict()
@@ -45,3 +45,11 @@ class TestBaseModel(unittest.TestCase):
 		dictionary1.update({'__class__': "BaseModel"})
 		dictionary1.update({'created_at': self.thirdbase.created_at.isoformat(), 'updated_at': self.thirdbase.updated_at.isoformat()})
 		self.assertEqual(dictionary, dictionary1)
+
+	def test_to_instance(self):
+		"""python3 -c 'print(__import__("test_base_model.py").to_instance)'
+		"""
+		dictionary = self.firstbase.to_dict()
+		new_instance = BaseModel(**dictionary)
+		self.assertEqual(str(self.firstbase), str(new_instance))
+		self.assertEqual(False, new_instance is self.firstbase)

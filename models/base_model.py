@@ -11,11 +11,19 @@ class BaseModel:
     BaseModel class definition
     """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Method to initialize the class attributes"""
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        if (kwargs):
+            for i in kwargs.keys():
+                if (i != '__class__'):
+                    if (i == 'created_at' or i == 'updated_at'):
+                        setattr(self, i, datetime.fromisoformat(kwargs[i]))
+                    else:
+                        setattr(self, i, kwargs[i])
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def save(self):
         """Updates the updated_at attribute with the current time"""

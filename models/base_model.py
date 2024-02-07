@@ -1,12 +1,15 @@
 #!/usr/bin/python3
+
 """Module that defines a class named BaseModel"""
+
 from uuid import uuid4
 from datetime import datetime
 
 
 class BaseModel:
-    """python3 -c 'print(__import__("base_model.py").base_model__doc__)'
-        """
+    """
+    BaseModel class definition
+    """
 
     def __init__(self):
         """Method to initialize the class attributes"""
@@ -15,7 +18,7 @@ class BaseModel:
         self.updated_at = datetime.now()
 
     def save(self):
-        """Updates the updated_at attribute with current time"""
+        """Updates the updated_at attribute with the current time"""
         self.updated_at = datetime.now()
 
     def to_dict(self):

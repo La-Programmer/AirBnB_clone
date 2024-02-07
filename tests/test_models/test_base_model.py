@@ -40,7 +40,6 @@ class TestBaseModel(unittest.TestCase):
 	def testToDict(self):
 		"""python3 -c 'print(__import__("test_base_model.py").to_dict__doc__)'
 		"""
-		print(self.thirdbase)
 		dictionary = self.thirdbase.to_dict()
 		dictionary1 = self.thirdbase.__dict__
 		dictionary1.update({'__class__': "BaseModel"})

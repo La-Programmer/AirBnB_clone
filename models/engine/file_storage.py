@@ -20,7 +20,7 @@ class FileStorage():
 		return self.__objects
 
 	def new(self, obj):
-		""" Sets an obj in __objects wiht key <class name>.id
+		""" Sets an obj in __objects with key <class name>.id
 		"""
 		self.__objects.update({f'{obj.__class__.__name__}.{obj.id}': obj.to_dict()})
 

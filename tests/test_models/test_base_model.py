@@ -6,6 +6,7 @@
 import unittest
 from models.base_model import BaseModel
 
+
 class TestBaseModel(unittest.TestCase):
 	"""python3 -c 'print(__import__("test_base_model.py").TestBaseModel__doc__)'
 	"""

@@ -49,7 +49,8 @@ class HBNBCommand(cmd.Cmd):
             key = "{}.{}".format(class_name, instance_id)
             instances = storage.all()
             if key in instances:
-                print(instances[key])
+                obj_instance = eval(class_name)(**instances[key])
+                print(obj_instance)
             else:
                 print("** no instance found **")
         except NameError:
@@ -81,13 +82,14 @@ class HBNBCommand(cmd.Cmd):
         """Prints all string representation of all instances"""
         args = arg.split()
         instances_list = []
+        keys = [x.split('.')[0] for x in storage.all().keys()]
         try:
             if not args:
                 for value in storage.all().values():
                     instances_list.append(str(value))
             else:
                 class_name = args[0]
-                if class_name not in storage.all():
+                if class_name not in keys:
                     print("** class doesn't exist **")
                     return
                 for key, value in storage.all().items():
@@ -100,12 +102,13 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
         args = arg.split()
+        keys = [x.split('.')[0] for x in storage.all().keys()]
         if not args:
             print("** class name missing **")
             return
         try:
             class_name = args[0]
-            if class_name not in storage.all():
+            if class_name not in keys:
                 print("** class doesn't exist **")
                 return
             if len(args) < 2:
@@ -124,8 +127,9 @@ class HBNBCommand(cmd.Cmd):
                     return
                 attribute_value = args[3]
                 instance = instances[key]
-                setattr(instance, attribute_name, attribute_value)
-                instance.save()
+                obj_instance = eval(class_name)(**instance)
+                obj_instance.attribute_name = attribute_value
+                obj_instance.save()
             else:
                 print("** no instance found **")
         except NameError:

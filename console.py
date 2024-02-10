@@ -2,6 +2,7 @@
 """Module for the HBNB Console"""
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 
 
@@ -128,7 +129,8 @@ class HBNBCommand(cmd.Cmd):
                 attribute_value = args[3]
                 instance = instances[key]
                 obj_instance = eval(class_name)(**instance)
-                obj_instance.attribute_name = attribute_value
+                setattr(obj_instance, attribute_name, attribute_value)
+                storage.new(obj_instance)
                 obj_instance.save()
             else:
                 print("** no instance found **")

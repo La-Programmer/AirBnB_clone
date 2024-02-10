@@ -29,7 +29,14 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         try:
-            new_instance = eval(arg)()
+            # Check if the class is in my_classes
+            class_name = arg
+            my_classes = storage.get_my_classes()
+            if class_name not in my_classes:
+                print("** class doesn't exist **")
+                return
+            # Create an instance using the class from my_classes
+            new_instance = my_classes[class_name]()
             new_instance.save()
             print(new_instance.id)
         except NameError:
@@ -43,17 +50,26 @@ class HBNBCommand(cmd.Cmd):
             return
         try:
             class_name = args[0]
+            my_classes = storage.get_my_classes()
+
+            if class_name not in my_classes:
+                print("** class doesn't exist **")
+                return
+
             if len(args) < 2:
                 print("** instance id missing **")
                 return
+
             instance_id = args[1]
             key = "{}.{}".format(class_name, instance_id)
             instances = storage.all()
+
             if key in instances:
-                obj_instance = eval(class_name)(**instances[key])
+                obj_instance = my_classes[class_name](**instances[key])
                 print(obj_instance)
             else:
                 print("** no instance found **")
+
         except NameError:
             print("** class doesn't exist **")
 
@@ -65,12 +81,20 @@ class HBNBCommand(cmd.Cmd):
             return
         try:
             class_name = args[0]
+            my_classes = storage.get_my_classes()
+
+            if class_name not in my_classes:
+                print("** class doesn't exist **")
+                return
+
             if len(args) < 2:
                 print("** instance id missing **")
                 return
+
             instance_id = args[1]
             key = "{}.{}".format(class_name, instance_id)
             instances = storage.all()
+
             if key in instances:
                 del instances[key]
                 storage.save()
@@ -83,49 +107,68 @@ class HBNBCommand(cmd.Cmd):
         """Prints all string representation of all instances"""
         args = arg.split()
         instances_list = []
-        keys = [x.split('.')[0] for x in storage.all().keys()]
+
         try:
+            # Get the dictionary of supported classes
+            my_classes = storage.get_my_classes()
+
             if not args:
+                # If no class name provided, show all instances
                 for value in storage.all().values():
                     instances_list.append(str(value))
             else:
                 class_name = args[0]
-                if class_name not in keys:
+                # Check if the provided class name is valid
+                if class_name not in my_classes:
                     print("** class doesn't exist **")
                     return
+
+                # Iterate through instances and filter by class name
                 for key, value in storage.all().items():
                     if class_name == key.split('.')[0]:
                         instances_list.append(str(value))
+
+            # print the list of instances
             print(instances_list)
         except NameError:
-            print("** class doesn't exist **")
+            print("** class doesn't exists **")
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
         args = arg.split()
         keys = [x.split('.')[0] for x in storage.all().keys()]
+
         if not args:
             print("** class name missing **")
             return
+
         try:
             class_name = args[0]
-            if class_name not in keys:
+            my_classes = storage.get_my_classes()
+
+            if class_name not in my_classes:
                 print("** class doesn't exist **")
                 return
+
             if len(args) < 2:
                 print("** instance id missing **")
                 return
+
             instance_id = args[1]
             key = "{}.{}".format(class_name, instance_id)
             instances = storage.all()
+
             if key in instances:
                 if len(args) < 3:
                     print("** attribute name missing **")
                     return
+
                 attribute_name = args[2]
+
                 if len(args) < 4:
                     print("** value missing **")
                     return
+
                 attribute_value = args[3]
                 instance = instances[key]
                 obj_instance = eval(class_name)(**instance)

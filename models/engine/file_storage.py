@@ -80,4 +80,3 @@ class FileStorage():
 
                     # Set the object in __objects
                     self.__objects[key] = obj_instance
-

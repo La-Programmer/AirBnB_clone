@@ -3,6 +3,7 @@
 import cmd
 from models.base_model import BaseModel
 
+
 class HBNBCommand(cmd.Cmd):
     """Command interpreter for HBNB"""
 
@@ -103,7 +104,6 @@ class HBNBCommand(cmd.Cmd):
         except NameError:
             print("** class doesn't exist **")
 
-
     def do_all(self, arg):
         """Prints all string representation of all instances"""
         from models import storage
@@ -130,7 +130,7 @@ class HBNBCommand(cmd.Cmd):
                     if class_name == key.split('.')[0]:
                         instances_list.append(str(value))
 
-            #print the list of instances
+            # print the list of instances
             print(instances_list)
         except NameError:
             print("** class doesn't exists **")

@@ -43,6 +43,14 @@ class FileStorage():
         with open(self.__file_path, 'w') as file:
             file.write(data)
 
+    def get_my_classes(self):
+        """Returns a dictionary of supported classes"""
+        classes = {
+            'BaseModel': BaseModel,
+            'User': User
+        }
+        return classes
+
     def reload(self):
         """ Deserializes the JSON file to __objects
         """

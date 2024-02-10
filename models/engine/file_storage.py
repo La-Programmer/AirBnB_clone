@@ -5,9 +5,6 @@
 
 import os
 import json
-from models.base_model import BaseModel
-from models.user import User
-
 
 class FileStorage():
     """ A class to handle file storage

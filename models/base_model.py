@@ -4,7 +4,7 @@
 
 from uuid import uuid4
 from datetime import datetime
-
+from models import storage
 
 class BaseModel:
     """
@@ -13,7 +13,6 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """Method to initialize the class attributes"""
-        from models import storage
         if (kwargs):
             for i in kwargs.keys():
                 if (i != '__class__'):

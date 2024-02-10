@@ -4,7 +4,7 @@
 
 from uuid import uuid4
 from datetime import datetime
-from . import storage
+
 
 class BaseModel:
     """
@@ -13,6 +13,7 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """Method to initialize the class attributes"""
+        from models import storage
         if (kwargs):
             for i in kwargs.keys():
                 if (i != '__class__'):
@@ -36,7 +37,7 @@ class BaseModel:
         serialized = dict(self.__dict__)
         serialized['__class__'] = self.__class__.__name__
         serialized.update({
-            "created_at": self.created_at.isoformat(), 
+            "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat()
         })
         return serialized

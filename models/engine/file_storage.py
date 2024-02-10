@@ -5,8 +5,8 @@
 
 import os
 import json
-from models.user import User
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage():
@@ -45,11 +45,11 @@ class FileStorage():
 
     def get_my_classes(self):
         """Returns a dictionary of supported classes"""
-        classes = {
+        my_classes = {
             'BaseModel': BaseModel,
             'User': User
         }
-        return classes
+        return my_classes
 
     def reload(self):
         """ Deserializes the JSON file to __objects

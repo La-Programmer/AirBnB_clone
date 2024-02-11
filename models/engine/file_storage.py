@@ -6,6 +6,7 @@
 import os
 import json
 
+
 class FileStorage():
     """ A class to handle file storage
     """
@@ -46,7 +47,6 @@ class FileStorage():
         if os.path.exists(self.__file_path):
             with open(self.__file_path, 'r') as file:
                 data = file.read()
-            
+
             # Deserialize JSON to self.__objects
             self.__objects = json.loads(data)
-            

@@ -4,7 +4,7 @@
 
 from uuid import uuid4
 from datetime import datetime
-from models import storage
+from . import storage
 
 class BaseModel:
     """
@@ -28,6 +28,7 @@ class BaseModel:
 
     def save(self):
         """Updates the updated_at attribute with the current time"""
+        print("Saving new object")
         self.updated_at = datetime.now()
         storage.save()
 

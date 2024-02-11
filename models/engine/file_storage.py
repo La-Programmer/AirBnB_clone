@@ -31,21 +31,13 @@ class FileStorage():
     def save(self):
         """ Serializes the __objects dict to a json file
         """
-        serialized = {}
-        for key, obj in self.__objects.items():
-            # Use the to_dict method to serialize each object
-            serialized[key] = obj.to_dict()
-
-        data = json.dumps(serialized)
+        data = json.dumps(self.__objects)
         with open(self.__file_path, 'w') as file:
             file.write(data)
 
     def get_my_classes(self):
         """Returns a dictionary of supported classes"""
-        my_classes = {
-            'BaseModel': BaseModel,
-            'User': User
-        }
+        my_classes = ['BaseModel', 'User']
         return my_classes
 
     def reload(self):
@@ -53,27 +45,8 @@ class FileStorage():
         """
         if os.path.exists(self.__file_path):
             with open(self.__file_path, 'r') as file:
-                # Read the entire file and save to the variable, content
-                content = file.read()
-            # Check if the file content is empty
-            if content:
-                # Convert/load JSON file back to python obj (dict)
-                serialized = json.loads(content)
-
-                # Iterate through the serialized dict
-                for key, value in serialized.items():
-                    # Extract class name and object ID
-                    class_name, obj_id = key.split('.')
-
-                    # Check for the class name
-                    if class_name == 'BaseModel':
-                        # Create instance of the calss
-                        obj_instance = BaseModel(**value)
-                    elif class_name == 'User':
-                        obj_instance = User(**value)
-                    else:
-                        # Skip unknown classes
-                        continue
-
-                    # Set the object in __objects
-                    self.__objects[key] = obj_instance
+                data = file.read()
+            
+            # Deserialize JSON to self.__objects
+            self.__objects = json.loads(data)
+            

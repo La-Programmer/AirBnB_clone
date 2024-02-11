@@ -3,6 +3,8 @@
 
 import cmd
 from models import storage
+from models.base_model import BaseModel
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -35,7 +37,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return
             # Create an instance using the class from my_classes
-            new_instance = my_classes[class_name]()
+            new_instance = eval(class_name)()
             new_instance.save()
             print(new_instance.id)
         except NameError:
@@ -64,7 +66,8 @@ class HBNBCommand(cmd.Cmd):
             instances = storage.all()
 
             if key in instances:
-                obj_instance = my_classes[class_name](**instances[key])
+                dictionary = instances[key]
+                obj_instance = eval(class_name)(**dictionary)
                 print(obj_instance)
             else:
                 print("** no instance found **")
@@ -104,19 +107,18 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """Prints all string representation of all instances"""
-        args = arg.split()
         instances_list = []
 
         try:
             # Get the dictionary of supported classes
             my_classes = storage.get_my_classes()
 
-            if not args:
+            if not arg:
                 # If no class name provided, show all instances
                 for value in storage.all().values():
                     instances_list.append(str(value))
             else:
-                class_name = args[0]
+                class_name = arg
                 # Check if the provided class name is valid
                 if class_name not in my_classes:
                     print("** class doesn't exist **")
@@ -135,7 +137,6 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
         args = arg.split()
-        keys = [x.split('.')[0] for x in storage.all().keys()]
 
         if not args:
             print("** class name missing **")
@@ -171,9 +172,9 @@ class HBNBCommand(cmd.Cmd):
                 attribute_value = args[3]
                 instance = instances[key]
                 obj_instance = eval(class_name)(**instance)
-                setattr(obj_instance, attribute_name, attribute_value)
-                storage.new(obj_instance)
                 obj_instance.save()
+                storage.new(obj_instance)
+                setattr(obj_instance, attribute_name, attribute_value)
             else:
                 print("** no instance found **")
         except NameError:

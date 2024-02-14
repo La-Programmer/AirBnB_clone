@@ -9,6 +9,7 @@ from . import storage
 class User(BaseModel):
     """ The User class
     """
+
     def __init__(self, *args, **kwargs):
         """ The initialization method of the user class
         """

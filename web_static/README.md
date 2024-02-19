@@ -1,0 +1,3 @@
+# WEB STATIC FOR AIRBNB PROJECT
+1. Centre a div
+2. 

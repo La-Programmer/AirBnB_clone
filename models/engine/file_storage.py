@@ -38,7 +38,8 @@ class FileStorage():
 
     def get_my_classes(self):
         """Returns a dictionary of supported classes"""
-        my_classes = ['BaseModel', 'User', 'State', 'Amenity', 'City', 'Review', 'Place']
+        my_classes = ['BaseModel', 'User', 'State',
+                      'Amenity', 'City', 'Review', 'Place']
         return my_classes
 
     def reload(self):

@@ -3,7 +3,7 @@ section.filters {
   height: 70px;
   width: 100%;
   display: grid;
-  grid-template-columns: 25% 25% 20%;
+  grid-template-columns: 25% 25%;
   border: 1px solid #dddddd;
   position: relative;
   border-radius: 4px;
